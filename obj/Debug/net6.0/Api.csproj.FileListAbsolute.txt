@@ -1,0 +1,15 @@
+/Users/djibril/Documents/C# Project/bin/Debug/net6.0/Api
+/Users/djibril/Documents/C# Project/bin/Debug/net6.0/Api.deps.json
+/Users/djibril/Documents/C# Project/bin/Debug/net6.0/Api.runtimeconfig.json
+/Users/djibril/Documents/C# Project/bin/Debug/net6.0/Api.dll
+/Users/djibril/Documents/C# Project/bin/Debug/net6.0/Api.pdb
+/Users/djibril/Documents/C# Project/obj/Debug/net6.0/Api.csproj.AssemblyReference.cache
+/Users/djibril/Documents/C# Project/obj/Debug/net6.0/Api.GeneratedMSBuildEditorConfig.editorconfig
+/Users/djibril/Documents/C# Project/obj/Debug/net6.0/Api.AssemblyInfoInputs.cache
+/Users/djibril/Documents/C# Project/obj/Debug/net6.0/Api.AssemblyInfo.cs
+/Users/djibril/Documents/C# Project/obj/Debug/net6.0/Api.csproj.CoreCompileInputs.cache
+/Users/djibril/Documents/C# Project/obj/Debug/net6.0/Api.dll
+/Users/djibril/Documents/C# Project/obj/Debug/net6.0/refint/Api.dll
+/Users/djibril/Documents/C# Project/obj/Debug/net6.0/Api.pdb
+/Users/djibril/Documents/C# Project/obj/Debug/net6.0/Api.genruntimeconfig.cache
+/Users/djibril/Documents/C# Project/obj/Debug/net6.0/ref/Api.dll
