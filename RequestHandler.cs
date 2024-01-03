@@ -18,7 +18,7 @@ namespace Api {
 
             // Méthode CRUD 
             // Add Article
-            if (request.Url.LocalPath == "/articles/add"){
+            if (request.Url.LocalPath == "/articles/add" && request.HttpMethod == "POST"){
                 Article A1 = new Article();
                 // ID
                 Console.WriteLine("Enter an Id for your product: ");
@@ -37,7 +37,12 @@ namespace Api {
             }
             
             // Delete Article
-
+            if (request.Url.LocalPath == "/articles/delete" && request.HttpMethod == "DELETE") {
+                Console.WriteLine("Enter the id of the products you want to delete");
+                int deleteId = int.Parse(Console.ReadLine());
+                articles.RemoveAt(deleteId - 1);
+            }
+            
             // Update Article
 
             // Get Article
