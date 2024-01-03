@@ -15,9 +15,10 @@ namespace Api {
             string responseString = "";
 
 
+
             // Méthode CRUD 
             // Add Article
-            if (request.Url.LocalPath == "/articles" && request.HttpMethod == "POST"){
+            if (request.Url.LocalPath == "/articles/add"){
                 Article A1 = new Article();
                 // ID
                 Console.WriteLine("Enter an Id for your product: ");
