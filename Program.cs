@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Api
 {
     public class SimpleApi
     {
+        private static List<Article> articles = new List<Article>();
         static void Main()
         {
             string url = "http://localhost:8080/";
@@ -18,7 +20,7 @@ namespace Api
                 while (true)
                 {
                     HttpListenerContext context = listener.GetContext();
-                    RequestHandler.ProcessRequest(context);
+                    RequestHandler.ProcessRequest(context,articles);
                 }
             }
         }
