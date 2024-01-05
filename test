@@ -1,0 +1,13 @@
+            if (request.Url.LocalPath == "/articles" && request.HttpMethod == "GET")
+            {
+                responseString = JsonSerializer.Serialize(articles);
+            }
+            else if (request.Url.LocalPath == "/users" && request.HttpMethod == "GET")
+            {
+                responseString = "Liste des utilisateurs";
+            }
+            else
+            {
+                responseString = "Endpoint non pris en charge";
+                response.StatusCode = (int)HttpStatusCode.NotFound;
+            }

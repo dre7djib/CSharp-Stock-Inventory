@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Common;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -22,7 +24,8 @@ namespace Api {
                 Article A1 = new Article();
                 // ID
                 Console.WriteLine("Enter an Id for your product: ");
-                A1.Id = Console.ReadLine();
+                string tempId = Console.ReadLine();
+                A1.Id = int.Parse(tempId);
                 // Title
                 Console.WriteLine("Enter a Title for your product: ");
                 A1.Title = Console.ReadLine();
@@ -42,23 +45,24 @@ namespace Api {
                 int deleteId = int.Parse(Console.ReadLine());
                 articles.RemoveAt(deleteId - 1);
             }
-            
+        
             // Update Article
 
             // Get Article
+            if (request.Url.LocalPath.StartsWith("/articles/") && request.HttpMethod == "GET") {
+                int id;
+                if (int.TryParse(request.Url.LocalPath.Substring("/articles/".Length), out id)) { 
+                    foreach (var item in articles) {
+                        if (item.Id == id){
+                            responseString = JsonSerializer.Serialize(item);
+                        }
+                        else {
+                            responseString = "Endpoint non pris en charge";
+                            response.StatusCode = (int)HttpStatusCode.NotFound;
+                        }
+                    }
+                }
 
-            if (request.Url.LocalPath == "/articles" && request.HttpMethod == "GET")
-            {
-                responseString = JsonSerializer.Serialize(articles);
-            }
-            else if (request.Url.LocalPath == "/users" && request.HttpMethod == "GET")
-            {
-                responseString = "Liste des utilisateurs";
-            }
-            else
-            {
-                responseString = "Endpoint non pris en charge";
-                response.StatusCode = (int)HttpStatusCode.NotFound;
             }
 
             byte[] buffer = Encoding.UTF8.GetBytes(responseString);
@@ -67,7 +71,5 @@ namespace Api {
             output.Write(buffer, 0, buffer.Length);
             output.Close();
         }
-    }
-
-    
+    }   
 }
