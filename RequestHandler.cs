@@ -34,7 +34,9 @@ namespace Api {
                 A1.Description = Console.ReadLine();
                 // Quantity
                 Console.WriteLine("Enter the Quantity remaining of the product");
-                A1.Quantity = Console.ReadLine();
+                string tempQuantity = Console.ReadLine();
+                A1.Quantity = int.Parse(tempQuantity);
+
 
                 articles.Add(A1);
             }
@@ -47,6 +49,39 @@ namespace Api {
             }
         
             // Update Article
+            if (request.Url.LocalPath.StartsWith("/articles/update/") && request.HttpMethod == "PUT") {
+                int id;
+                if (int.TryParse(request.Url.LocalPath.Substring("/articles/update/".Length), out id)) {
+                    foreach (var item in articles) {
+                        if (item.Id == id) {
+                            Console.WriteLine("What do you want to update? Title, Description, Quantity");
+                            string updateString = Console.ReadLine();
+
+                            switch(updateString) {
+
+                                case "Title":
+                                    Console.WriteLine("Enter the new value");
+                                    item.Title = Console.ReadLine();
+                                    break;
+                                case "Description":
+                                    Console.WriteLine("Enter the new value");
+                                    item.Description = Console.ReadLine();
+                                    break;
+                                case "Quantity":
+                                    Console.WriteLine("Enter the new value");
+                                    string tempQuantity = Console.ReadLine();
+                                    item.Quantity = int.Parse(tempQuantity);
+                                    break;
+                                default:
+                                    Console.WriteLine("It doesn't exit!");
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                
+            }
 
             // Get Article
             if (request.Url.LocalPath.StartsWith("/articles/") && request.HttpMethod == "GET") {
