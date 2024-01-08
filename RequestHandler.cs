@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Common;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
 
 namespace Api {
     public class RequestHandler {
-        public static void ProcessRequest(HttpListenerContext context, List<Article> articles ) {
+        public static void ProcessRequest(HttpListenerContext context, List<Article> articles , List<User> users) {
             HttpListenerRequest request = context.Request;
             HttpListenerResponse response = context.Response;
 
@@ -38,6 +39,22 @@ namespace Api {
                         A1.Quantity = int.Parse(tempQuantity);
                         articles.Add(A1);
                     }
+                    // Add User
+                    if (request.Url.LocalPath == "/users/add") {
+                        User U1 = new User();
+                        // ID
+                        Console.WriteLine("Enter an Id for the user: ");
+                        string tempId = Console.ReadLine();
+                        U1.Id = int.Parse(tempId);
+                        // Username
+                        Console.WriteLine("Enter a Username for the user: ");
+                        U1.Username = Console.ReadLine();
+                        // Email
+                        Console.WriteLine("Enter a email for the user: ");
+                        U1.Email = Console.ReadLine();
+
+                        users.Add(U1);
+                    }
                     break;
                 
                 case "DELETE":
@@ -46,6 +63,12 @@ namespace Api {
                         Console.WriteLine("Enter the id of the products you want to delete");
                         int deleteId = int.Parse(Console.ReadLine());
                         articles.RemoveAt(deleteId - 1);
+                    }
+                    // Delete User
+                    if (request.Url.LocalPath.StartsWith("/users/delete")) {
+                        Console.WriteLine("Enter the id of the user you want to delete");
+                        int deleteId = int.Parse(Console.ReadLine());
+                        users.RemoveAt(deleteId - 1);
                     }
                     break;
                 
@@ -82,6 +105,33 @@ namespace Api {
                             }
                         } 
                     }
+
+                    if (request.Url.LocalPath.StartsWith("/users/update/")) {
+                        int id;
+                        if (int.TryParse(request.Url.LocalPath.Substring("/users/update/".Length), out id)) {
+                            foreach (var item in users) {
+                                if (item.Id == id) {
+                                    Console.WriteLine("What do you want to update? Username, Email");
+                                    string updateString = Console.ReadLine();
+
+                                    switch(updateString) {
+
+                                        case "Username":
+                                            Console.WriteLine("Enter the new value");
+                                            item.Username = Console.ReadLine();
+                                            break;
+                                        case "Email":
+                                            Console.WriteLine("Enter the new value");
+                                            item.Email = Console.ReadLine();
+                                            break;
+                                        default:
+                                            Console.WriteLine("It doesn't exit!");
+                                            break;
+                                    }
+                                }
+                            }
+                        } 
+                    }
                     break;
 
                 case "GET":
@@ -100,6 +150,23 @@ namespace Api {
                     // Get articles
                     else if (request.Url.LocalPath == "/articles") {
                         responseString = JsonSerializer.Serialize(articles);
+                    }
+
+                    // Get User
+                    if (request.Url.LocalPath.StartsWith("/users/")) {
+                        int id;
+                        if (int.TryParse(request.Url.LocalPath.Substring("/users/".Length), out id)) { 
+                            foreach (Api.User user in  users) {
+                                if (user.Id == id){
+                                    responseString = JsonSerializer.Serialize(user);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    // Get users
+                    else if (request.Url.LocalPath == "/users") {
+                        responseString = JsonSerializer.Serialize(users);
                     }
                     break;
 

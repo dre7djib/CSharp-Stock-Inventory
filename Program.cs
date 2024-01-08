@@ -7,6 +7,7 @@ namespace Api
     public class SimpleApi
     {
         private static List<Article> articles = new List<Article>();
+        private static List<User> users = new List<User>();
         static void Main()
         {
             string url = "http://localhost:8080/";
@@ -20,7 +21,7 @@ namespace Api
                 while (true)
                 {
                     HttpListenerContext context = listener.GetContext();
-                    RequestHandler.ProcessRequest(context,articles);
+                    RequestHandler.ProcessRequest(context,articles,users);
                 }
             }
         }
