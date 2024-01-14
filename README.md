@@ -27,4 +27,11 @@ Le projet vise à développer une application de gestion d'inventaire et de stoc
    - Utilisation de GitHub pour gérer efficacement les versions du code.
    - Mise en place de branches, pull requests, et commentaires pour une collaboration optimale.
    - Utilisation de Trello pour organiser les tâches de l'équipe, en suivant un tableau avec des listes et des cartes.
+   
+## Rapport Final et Livraison (Ilyes et Lucas):
+   - Rédaction d'un rapport final expliquant la configuration des machines virtuelles.
+   - Livraison du projet sous forme d'un lien vers un dépôt GitHub.
+
+## Conclusion:
+Le projet a été mené à bien grâce à la collaboration efficace de l'équipe. Chaque membre a contribué à sa spécialité, ce qui a permis de couvrir tous les aspects du projet, de la conception de l'API à la sécurisation des serveurs, en passant par la gestion de projet. Le dépôt GitHub contient l'ensemble du code source et la documentation détaillée.
 
