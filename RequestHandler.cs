@@ -156,15 +156,32 @@ namespace Api {
                     // Get Article
                     if (request.Url.LocalPath.StartsWith("/articles/")) {
                         int id;
-                        if (int.TryParse(request.Url.LocalPath.Substring("/articles/".Length), out id)) { 
-                            foreach (Api.Article article in  articles) {
-                                if (article.Id == id){
-                                    responseString = JsonSerializer.Serialize(article);
-                                    break;
+                        if (int.TryParse(request.Url.LocalPath.Substring("/articles/".Length), out id)) {
+                            Article A1 = new Article();
+                            var sql = "SELECT * FROM articles WHERE id = @id";
+                            using (var cmd = new MySqlCommand(sql, db.connection)) {
+                                cmd.Parameters.AddWithValue("@id", id);
+                                using (var reader = cmd.ExecuteReader()) {
+                                    if (reader.Read()) {
+                                        if (reader.IsDBNull(1)) {
+                                            responseString = "Endpoint non pris en charge";
+                                        }
+                                        else {
+                                            A1.Id = reader.GetInt32("id");
+                                            A1.Title = reader.GetString("title");
+                                            A1.Description = reader.GetString("description");
+                                            A1.Quantity = reader.GetInt32("quantity");
+                                            articles.Add(A1);
+                                            responseString = JsonSerializer.Serialize(A1);
+                                        }
+                                    }
                                 }
                             }
+                            
                         }
                     }
+
+                            
                     // Get articles
                     else if (request.Url.LocalPath == "/articles") {
                         responseString = JsonSerializer.Serialize(articles);
@@ -173,15 +190,31 @@ namespace Api {
                     // Get User
                     if (request.Url.LocalPath.StartsWith("/users/")) {
                         int id;
-                        if (int.TryParse(request.Url.LocalPath.Substring("/users/".Length), out id)) { 
-                            foreach (Api.User user in  users) {
-                                if (user.Id == id){
-                                    responseString = JsonSerializer.Serialize(user);
-                                    break;
+                        if (int.TryParse(request.Url.LocalPath.Substring("/users/".Length), out id)) {
+                            User U1 = new User();
+                            var sql = "SELECT * FROM users WHERE id = @id";
+                            using (var cmd = new MySqlCommand(sql, db.connection)) {
+                                cmd.Parameters.AddWithValue("@id", id);
+                                using (var reader = cmd.ExecuteReader()) {
+                                    if (reader.Read()) {
+                                        if (reader.IsDBNull(1)) {
+                                            responseString = "Endpoint non pris en charge";
+                                        }
+                                        else {
+                                            U1.Id = reader.GetInt32("id");
+                                            U1.Username = reader.GetString("username");
+                                            U1.Email = reader.GetString("email");
+                                            U1.Password = reader.GetString("password");
+                                            users.Add(U1);
+                                            responseString = JsonSerializer.Serialize(U1);
+                                        }
+                                    }
                                 }
                             }
+                            
                         }
                     }
+                    
                     // Get users
                     else if (request.Url.LocalPath == "/users") {
                         responseString = JsonSerializer.Serialize(users);
