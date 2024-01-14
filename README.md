@@ -17,3 +17,14 @@ Le projet vise à développer une application de gestion d'inventaire et de stoc
 ## Développement de l'API C# (Djibril):
    - Mise en place de l'API permettant les opérations CRUD sur les articles et les utilisateurs.
    - Documentation exhaustive de l'API pour assurer une utilisation correcte.
+
+## Partie Web et Trello (Ilyes et Lucas): 
+   - Configuration du serveur web pour héberger l'API développée.
+   - Exploration des notions avancées telles que l'asynchrone, les requêtes HTTP à l'aide de Postman.
+   - Interaction réussie avec la base de données MySQL.
+
+## Gestion de Versions et Projet (Tous):
+   - Utilisation de GitHub pour gérer efficacement les versions du code.
+   - Mise en place de branches, pull requests, et commentaires pour une collaboration optimale.
+   - Utilisation de Trello pour organiser les tâches de l'équipe, en suivant un tableau avec des listes et des cartes.
+
