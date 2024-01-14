@@ -24,54 +24,13 @@ namespace Api {
                     // Add Article
                     if (request.Url.LocalPath == "/articles/add") {
                         Article A1 = new Article();
-                        // ID
-                        Console.WriteLine("Enter an Id for your product: ");
-                        string tempId = Console.ReadLine();
-                        A1.Id = int.Parse(tempId);
-                        // Title
-                        Console.WriteLine("Enter a Title for your product: ");
-                        A1.Title = Console.ReadLine();
-                        // Description
-                        Console.WriteLine("Enter a description for your product: ");
-                        A1.Description = Console.ReadLine();
-                        // Quantity
-                        Console.WriteLine("Enter the Quantity remaining of the product");
-                        string tempQuantity = Console.ReadLine();
-                        A1.Quantity = int.Parse(tempQuantity);
-                        articles.Add(A1);
-                        var sql = "INSERT INTO api_csharp.articles (title, description, quantity) VALUES ( @title, @description, @quantity)";
-                        var cmd = new MySqlCommand(sql, db.connection);
-                        //cmd.Parameters.AddWithValue("@id", A1.Id);
-                        cmd.Parameters.AddWithValue("@title", A1.Title);
-                        cmd.Parameters.AddWithValue("@description", A1.Description);
-                        cmd.Parameters.AddWithValue("@quantity", A1.Quantity);
-                        cmd.ExecuteNonQuery();
-                        
+                        POST.AddArticle(db, A1);
                     }
                         
                     // Add User
                     if (request.Url.LocalPath == "/users/add") {
                         User U1 = new User();
-                        // ID
-                        Console.WriteLine("Enter an Id for the user: ");
-                        string tempId = Console.ReadLine();
-                        U1.Id = int.Parse(tempId);
-                        // Username
-                        Console.WriteLine("Enter a Username for the user: ");
-                        U1.Username = Console.ReadLine();
-                        // Email
-                        Console.WriteLine("Enter a email for the user: ");
-                        U1.Email = Console.ReadLine();
-
-                        Console.WriteLine("Enter a password for the user: ");
-                        U1.Password = Console.ReadLine();
-                        users.Add(U1);
-                        var sql = "INSERT INTO api_csharp.users (username,email,password) VALUES (@username, @email, @password)";
-                        var cmd = new MySqlCommand(sql, db.connection);
-                        cmd.Parameters.AddWithValue("@username", U1.Username);
-                        cmd.Parameters.AddWithValue("@email", U1.Email);
-                        cmd.Parameters.AddWithValue("@password", U1.Password);
-                        cmd.ExecuteNonQuery();
+                        POST.AddUser(db, U1);
                     }
                     break;
                 
@@ -171,7 +130,6 @@ namespace Api {
                                             A1.Title = reader.GetString("title");
                                             A1.Description = reader.GetString("description");
                                             A1.Quantity = reader.GetInt32("quantity");
-                                            articles.Add(A1);
                                             responseString = JsonSerializer.Serialize(A1);
                                         }
                                     }
@@ -184,7 +142,24 @@ namespace Api {
                             
                     // Get articles
                     else if (request.Url.LocalPath == "/articles") {
-                        responseString = JsonSerializer.Serialize(articles);
+                        string query = "SELECT * FROM articles";
+                        MySqlCommand command = new MySqlCommand(query, db.connection);
+                        MySqlDataReader reader = command.ExecuteReader();
+
+                        List<Article> getAllarticles = new List<Article>(); // Créer une liste pour stocker les articles
+
+                        while (reader.Read())
+                        {
+                            Article A1 = new Article();
+                            A1.Id = reader.GetInt32("id");
+                            A1.Title = reader.GetString("title");
+                            A1.Description = reader.GetString("description");
+                            A1.Quantity = reader.GetInt32("quantity");
+                            getAllarticles.Add(A1); // Ajouter chaque article à la liste
+                        }
+                        reader.Close();
+
+                        responseString = JsonSerializer.Serialize(getAllarticles);
                     }
 
                     // Get User
@@ -205,7 +180,6 @@ namespace Api {
                                             U1.Username = reader.GetString("username");
                                             U1.Email = reader.GetString("email");
                                             U1.Password = reader.GetString("password");
-                                            users.Add(U1);
                                             responseString = JsonSerializer.Serialize(U1);
                                         }
                                     }
@@ -214,10 +188,27 @@ namespace Api {
                             
                         }
                     }
-                    
+
                     // Get users
                     else if (request.Url.LocalPath == "/users") {
-                        responseString = JsonSerializer.Serialize(users);
+                        string query = "SELECT * FROM users";
+                        MySqlCommand command = new MySqlCommand(query, db.connection);
+                        MySqlDataReader reader = command.ExecuteReader();
+
+                        List<User> getAllUsers = new List<User>(); // Créer une liste pour stocker les Users
+
+                        while (reader.Read())
+                        {
+                            User U1 = new User();
+                            U1.Id = reader.GetInt32("id");
+                            U1.Username = reader.GetString("username");
+                            U1.Email = reader.GetString("email");
+                            U1.Password = reader.GetString("password");
+                            getAllUsers.Add(U1); // Ajouter chaque User à la liste
+                        }
+                        reader.Close();
+
+                        responseString = JsonSerializer.Serialize(getAllUsers);
                     }
                     break;
 
