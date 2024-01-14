@@ -14,14 +14,16 @@ namespace Api
 
             using (HttpListener listener = new HttpListener())
             {
+                DatabaseConnection db = new DatabaseConnection(); // Instantiate the db object
                 listener.Prefixes.Add(url);
                 listener.Start();
                 Console.WriteLine($"API en cours d'exécution sur {url}");
+                db.OpenConnection(); // Open the connection to the database
 
                 while (true)
                 {
                     HttpListenerContext context = listener.GetContext();
-                    RequestHandler.ProcessRequest(context,articles,users);
+                    RequestHandler.ProcessRequest(context, articles, users, db);
                 }
             }
         }

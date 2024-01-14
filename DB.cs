@@ -5,15 +5,15 @@ namespace Api
 {
     public class DatabaseConnection
     {
-        private MySqlConnection connection;
+        public MySqlConnection connection;
 
         public DatabaseConnection()
         {
-            Console.WriteLine("Enter your username :");
+            Console.WriteLine("Enter your username : ");
             string username = Console.ReadLine();
-            Console.WriteLine("Enter your password :");
+            Console.WriteLine("Enter your password : ");
             string password = Console.ReadLine();
-            string connectionString = "server=localhost;port=3306;database=api_csharp;UID=" + username + ";PASSWORD=" + password;
+            string connectionString = "server=172.16.234.20;port=3306;database=api_csharp;UID=" + username + ";PASSWORD=" + password;
             connection = new MySqlConnection(connectionString);
         }
 

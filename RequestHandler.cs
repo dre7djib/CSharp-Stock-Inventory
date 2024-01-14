@@ -7,11 +7,12 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using MySql.Data.MySqlClient;
 
 
 namespace Api {
     public class RequestHandler {
-        public static void ProcessRequest(HttpListenerContext context, List<Article> articles , List<User> users) {
+        public static void ProcessRequest(HttpListenerContext context, List<Article> articles , List<User> users, DatabaseConnection db) {
             HttpListenerRequest request = context.Request;
             HttpListenerResponse response = context.Response;
 
@@ -38,7 +39,19 @@ namespace Api {
                         string tempQuantity = Console.ReadLine();
                         A1.Quantity = int.Parse(tempQuantity);
                         articles.Add(A1);
+                        var sql = "INSERT INTO api_csharp.articles (id, title, description, quantity) VALUES (@id, @title, @description, @quantity)";
+                        var cmd = new MySqlCommand(sql, db.connection);
+                        cmd.Parameters.AddWithValue("@id", A1.Id);
+                        cmd.Parameters.AddWithValue("@title", A1.Title);
+                        cmd.Parameters.AddWithValue("@description", A1.Description);
+                        cmd.Parameters.AddWithValue("@quantity", A1.Quantity);
+                        cmd.ExecuteNonQuery();
+                        
                     }
+                        //var cmd = new MySqlCommand(sql, db.connection);
+                        //var version = cmd.ExecuteScalar().ToString();
+                        //Console.WriteLine($"MySQL version: {version}");
+                        
                     // Add User
                     if (request.Url.LocalPath == "/users/add") {
                         User U1 = new User();
