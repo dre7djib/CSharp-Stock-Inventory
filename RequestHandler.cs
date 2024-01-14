@@ -39,18 +39,15 @@ namespace Api {
                         string tempQuantity = Console.ReadLine();
                         A1.Quantity = int.Parse(tempQuantity);
                         articles.Add(A1);
-                        var sql = "INSERT INTO api_csharp.articles (id, title, description, quantity) VALUES (@id, @title, @description, @quantity)";
+                        var sql = "INSERT INTO api_csharp.articles (title, description, quantity) VALUES ( @title, @description, @quantity)";
                         var cmd = new MySqlCommand(sql, db.connection);
-                        cmd.Parameters.AddWithValue("@id", A1.Id);
+                        //cmd.Parameters.AddWithValue("@id", A1.Id);
                         cmd.Parameters.AddWithValue("@title", A1.Title);
                         cmd.Parameters.AddWithValue("@description", A1.Description);
                         cmd.Parameters.AddWithValue("@quantity", A1.Quantity);
                         cmd.ExecuteNonQuery();
                         
                     }
-                        //var cmd = new MySqlCommand(sql, db.connection);
-                        //var version = cmd.ExecuteScalar().ToString();
-                        //Console.WriteLine($"MySQL version: {version}");
                         
                     // Add User
                     if (request.Url.LocalPath == "/users/add") {
@@ -66,7 +63,15 @@ namespace Api {
                         Console.WriteLine("Enter a email for the user: ");
                         U1.Email = Console.ReadLine();
 
+                        Console.WriteLine("Enter a password for the user: ");
+                        U1.Password = Console.ReadLine();
                         users.Add(U1);
+                        var sql = "INSERT INTO api_csharp.users (username,email,password) VALUES (@username, @email, @password)";
+                        var cmd = new MySqlCommand(sql, db.connection);
+                        cmd.Parameters.AddWithValue("@username", U1.Username);
+                        cmd.Parameters.AddWithValue("@email", U1.Email);
+                        cmd.Parameters.AddWithValue("@password", U1.Password);
+                        cmd.ExecuteNonQuery();
                     }
                     break;
                 
