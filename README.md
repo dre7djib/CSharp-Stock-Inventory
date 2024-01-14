@@ -1,2 +1,6 @@
-# CSharp-Stock-Inventory
-test
+# CSharp-Stock-Inventory 
+
+## Groupe : Djibril / Ilyes / Lucas
+
+
+
