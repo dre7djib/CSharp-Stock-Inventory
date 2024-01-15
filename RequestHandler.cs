@@ -36,16 +36,17 @@ namespace Api {
                 
                 case "DELETE":
                     // Delete Article
+                    int deleteId;
                     if (request.Url.LocalPath.StartsWith("/articles/delete")) {
                         Console.WriteLine("Enter the id of the products you want to delete");
-                        int deleteId = int.Parse(Console.ReadLine());
-                        articles.RemoveAt(deleteId - 1);
+                        deleteId = int.Parse(Console.ReadLine());
+                        DELETE.deleteArticle(db, deleteId, ref responseString);
                     }
                     // Delete User
                     if (request.Url.LocalPath.StartsWith("/users/delete")) {
-                        Console.WriteLine("Enter the id of the user you want to delete");
-                        int deleteId = int.Parse(Console.ReadLine());
-                        users.RemoveAt(deleteId - 1);
+                        Console.WriteLine("Enter the id of the products you want to delete");
+                        deleteId = int.Parse(Console.ReadLine());
+                        DELETE.deleteUser(db, deleteId, ref responseString);
                     }
                     break;
                 
