@@ -94,7 +94,3 @@ Redémarrez Apache pour appliquer les changements :
 bash
 
 sudo systemctl restart apache2
-
-Conclusion
-
-Félicitations ! Vous avez maintenant configuré un serveur web avec ASP.NET, que ce soit avec Nginx ou Apache. Assurez-vous que vos services sont en cours d'exécution et testez votre application en accédant à votre domaine via un navigateur.
