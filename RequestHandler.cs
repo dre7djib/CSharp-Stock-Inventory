@@ -114,101 +114,22 @@ namespace Api {
                 case "GET":
                     // Get Article
                     if (request.Url.LocalPath.StartsWith("/articles/")) {
-                        int id;
-                        if (int.TryParse(request.Url.LocalPath.Substring("/articles/".Length), out id)) {
-                            Article A1 = new Article();
-                            var sql = "SELECT * FROM articles WHERE id = @id";
-                            using (var cmd = new MySqlCommand(sql, db.connection)) {
-                                cmd.Parameters.AddWithValue("@id", id);
-                                using (var reader = cmd.ExecuteReader()) {
-                                    if (reader.Read()) {
-                                        if (reader.IsDBNull(1)) {
-                                            responseString = "Endpoint non pris en charge";
-                                        }
-                                        else {
-                                            A1.Id = reader.GetInt32("id");
-                                            A1.Title = reader.GetString("title");
-                                            A1.Description = reader.GetString("description");
-                                            A1.Quantity = reader.GetInt32("quantity");
-                                            responseString = JsonSerializer.Serialize(A1);
-                                        }
-                                    }
-                                }
-                            }
-                            
-                        }
+                        GET.getArticle(db, ref responseString, request);
                     }
 
-                            
-                    // Get articles
+                    // Get all articles
                     else if (request.Url.LocalPath == "/articles") {
-                        string query = "SELECT * FROM articles";
-                        MySqlCommand command = new MySqlCommand(query, db.connection);
-                        MySqlDataReader reader = command.ExecuteReader();
-
-                        List<Article> getAllarticles = new List<Article>(); // Créer une liste pour stocker les articles
-
-                        while (reader.Read())
-                        {
-                            Article A1 = new Article();
-                            A1.Id = reader.GetInt32("id");
-                            A1.Title = reader.GetString("title");
-                            A1.Description = reader.GetString("description");
-                            A1.Quantity = reader.GetInt32("quantity");
-                            getAllarticles.Add(A1); // Ajouter chaque article à la liste
-                        }
-                        reader.Close();
-
-                        responseString = JsonSerializer.Serialize(getAllarticles);
+                        GET.getAllArticles(db, ref responseString);
                     }
 
                     // Get User
                     if (request.Url.LocalPath.StartsWith("/users/")) {
-                        int id;
-                        if (int.TryParse(request.Url.LocalPath.Substring("/users/".Length), out id)) {
-                            User U1 = new User();
-                            var sql = "SELECT * FROM users WHERE id = @id";
-                            using (var cmd = new MySqlCommand(sql, db.connection)) {
-                                cmd.Parameters.AddWithValue("@id", id);
-                                using (var reader = cmd.ExecuteReader()) {
-                                    if (reader.Read()) {
-                                        if (reader.IsDBNull(1)) {
-                                            responseString = "Endpoint non pris en charge";
-                                        }
-                                        else {
-                                            U1.Id = reader.GetInt32("id");
-                                            U1.Username = reader.GetString("username");
-                                            U1.Email = reader.GetString("email");
-                                            U1.Password = reader.GetString("password");
-                                            responseString = JsonSerializer.Serialize(U1);
-                                        }
-                                    }
-                                }
-                            }
-                            
-                        }
+                        GET.getUser(db, ref responseString, request);
                     }
 
-                    // Get users
+                    // Get all users
                     else if (request.Url.LocalPath == "/users") {
-                        string query = "SELECT * FROM users";
-                        MySqlCommand command = new MySqlCommand(query, db.connection);
-                        MySqlDataReader reader = command.ExecuteReader();
-
-                        List<User> getAllUsers = new List<User>(); // Créer une liste pour stocker les Users
-
-                        while (reader.Read())
-                        {
-                            User U1 = new User();
-                            U1.Id = reader.GetInt32("id");
-                            U1.Username = reader.GetString("username");
-                            U1.Email = reader.GetString("email");
-                            U1.Password = reader.GetString("password");
-                            getAllUsers.Add(U1); // Ajouter chaque User à la liste
-                        }
-                        reader.Close();
-
-                        responseString = JsonSerializer.Serialize(getAllUsers);
+                        GET.getAllUsers(db, ref responseString);
                     }
                     break;
 
