@@ -53,62 +53,12 @@ namespace Api {
                 case "PUT":
                     // Update Article
                     if (request.Url.LocalPath.StartsWith("/articles/update/")) {
-                        int id;
-                        if (int.TryParse(request.Url.LocalPath.Substring("/articles/update/".Length), out id)) {
-                            foreach (var item in articles) {
-                                if (item.Id == id) {
-                                    Console.WriteLine("What do you want to update? Title, Description, Quantity");
-                                    string updateString = Console.ReadLine();
-
-                                    switch(updateString) {
-
-                                        case "Title":
-                                            Console.WriteLine("Enter the new value");
-                                            item.Title = Console.ReadLine();
-                                            break;
-                                        case "Description":
-                                            Console.WriteLine("Enter the new value");
-                                            item.Description = Console.ReadLine();
-                                            break;
-                                        case "Quantity":
-                                            Console.WriteLine("Enter the new value");
-                                            string tempQuantity = Console.ReadLine();
-                                            item.Quantity = int.Parse(tempQuantity);
-                                            break;
-                                        default:
-                                            Console.WriteLine("It doesn't exit!");
-                                            break;
-                                    }
-                                }
-                            }
-                        } 
+                        UPDATE.updateArticle(db, request);
                     }
-
+                    
+                    // Update User
                     if (request.Url.LocalPath.StartsWith("/users/update/")) {
-                        int id;
-                        if (int.TryParse(request.Url.LocalPath.Substring("/users/update/".Length), out id)) {
-                            foreach (var item in users) {
-                                if (item.Id == id) {
-                                    Console.WriteLine("What do you want to update? Username, Email");
-                                    string updateString = Console.ReadLine();
-
-                                    switch(updateString) {
-
-                                        case "Username":
-                                            Console.WriteLine("Enter the new value");
-                                            item.Username = Console.ReadLine();
-                                            break;
-                                        case "Email":
-                                            Console.WriteLine("Enter the new value");
-                                            item.Email = Console.ReadLine();
-                                            break;
-                                        default:
-                                            Console.WriteLine("It doesn't exit!");
-                                            break;
-                                    }
-                                }
-                            }
-                        } 
+                        UPDATE.updateUser(db, request);
                     }
                     break;
 
